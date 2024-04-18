@@ -2,10 +2,12 @@ def zhegalkin_polynomial(k, f_vec):
     ans = ""
     target = build_pascal_triangle(pow(2, k), f_vec)
     for i in range(len(target)):
+        # Проверка для перового элемента (добавление в ответ 1)
         if i == 0:
             if target[i] == '1':
                 ans += '1' + " \u2295 "
         if int(target[i]) == 1:
+            # Перевод в бинарный вид перменных с еденицой
             args_input = str(bin(i))[2:].zfill(k)
             conjuction = ""
             for j in range(len(args_input)):
@@ -14,7 +16,7 @@ def zhegalkin_polynomial(k, f_vec):
             ans += conjuction
             if conjuction != "":
                 ans += " \u2295 "
-            ans = ans[:len(ans) - 2]
+            ans = ans[:len(ans) - 2] # Обрезание последнего символа \u2295
     args = ""
     for i in range(k):
         if i == k - 1:
@@ -24,6 +26,7 @@ def zhegalkin_polynomial(k, f_vec):
     print("Полином Жегалкина исходной функции f({}):".format(args))
     print(ans)
 
+# Функция для построения таблицы
 def build_truth_table(k, f_vec):
     truth_table = ""
     for i in range(k):
@@ -45,7 +48,7 @@ def build_pascal_triangle(l0, f_vec):
             return ""
         else:
             for i in range(l - 1):
-                line += str((int(vec[i]) + int(vec[i + 1])) % 2)
+                line += str((int(vec[i]) + int(vec[i + 1])) % 2) # Логическая дизъюнкция
             v = line
             line = " " * (l0 - l + 1) + " ".join(line) + " " * (l0 - l + 1) + '\n'
             return line + build_line(l - 1, pasc, v)
@@ -53,6 +56,7 @@ def build_pascal_triangle(l0, f_vec):
     pascal_triangle = " ".join(f_vec) + '\n' + build_line(l0, pascal_triangle, f_vec)
     target = ""
     lines = pascal_triangle.split('\n')
+    # Цикл для взятия первого элемента каждой строки треугольника
     for line in lines:
         if line.lstrip() != "":
             target += line.lstrip()[0]
@@ -68,6 +72,7 @@ if __name__ == '__main__':
         print("Попробуйте снова.")
         f_vec = input("Введите вектор значений функции f: ")
     args = ""
+    # Цикл для записи x1, x2, x3, ...
     for i in range(k):
         if i == k - 1:
             args += "x{}".format(i + 1)
